@@ -1,49 +1,76 @@
 <div align="center">
 
-# Finite State Machine Library
+# Finite State Machine — C++
 
-**A small, reusable C++ implementation of the finite state machine pattern.**
+**A compact implementation of the State pattern and finite-state-machine behavior.**
 
-![Language](https://img.shields.io/badge/language-C%2B%2B-00599C?logo=cplusplus&logoColor=white)
-![Pattern](https://img.shields.io/badge/design%20pattern-FSM-6f42c1)
-![Status](https://img.shields.io/badge/status-learning%20library-lightgrey)
+![C++](https://img.shields.io/badge/C%2B%2B-00599C?logo=cplusplus&logoColor=white)
+![Pattern](https://img.shields.io/badge/pattern-finite%20state%20machine-6f42c1)
+![Scope](https://img.shields.io/badge/scope-learning%20library-lightgrey)
 
 </div>
 
+## Contents
+
+- [Overview](#overview)
+- [Concept](#concept)
+- [Included states](#included-states)
+- [Transition example](#transition-example)
+- [Build](#build)
+- [Repository layout](#repository-layout)
+- [Design notes](#design-notes)
+- [License](#license)
+
 ## Overview
 
-This project demonstrates a straightforward way to model behavior as a collection of states managed by a state machine.
+This repository demonstrates a small C++ finite state machine (FSM). The example switches an object between state implementations, separating state-specific behavior from the code that owns the machine.
 
-Finite State Machines (FSMs) are useful when an object can occupy one state at a time and change behavior in response to events or conditions. Typical applications include character controllers, menu navigation, protocol handling, and workflow orchestration.
+FSMs are useful for modeling character behavior, menus, workflow stages, device modes, and other systems with explicit states and transitions.
 
-## Included example states
+## Concept
 
-- **IdleState** — example idle behavior
-- **RunState** — example running behavior
-- **State** — state abstraction
-- **StateMachine** — state coordination and transition management
+A state machine typically consists of:
 
-The repository also includes a small `main.cpp` entry point demonstrating the implementation.
+- A state abstraction defining the common interface
+- Concrete state classes implementing individual behaviors
+- A state-machine object that stores and changes the active state
 
-## Technology
+## Included states
 
-- C++
+- `State/` — state abstraction
+- `StateMachine/` — state coordination
+- `IdleState/` — idle behavior example
+- `RunState/` — running behavior example
+- `main.cpp` — example that changes the active state
+
+## Transition example
+
+```mermaid
+stateDiagram-v2
+    [*] --> Run
+    Run --> Idle
+    Idle --> Idle
+    Idle --> Run
+    Run --> [*]
+```
+
+The diagram reflects the sequence of `setState()` calls in the current example program; it is not a complete gameplay state chart.
 
 ## Build
 
-A compilation helper is included:
+The repository includes a compilation helper:
 
 ```bash
 chmod +x comp.sh
 ./comp.sh
 ```
 
-Inspect the script if your compiler or build environment differs from the original setup.
+Inspect `comp.sh` to see the compiler command and output path used by the project.
 
 ## Repository layout
 
 ```text
-.
+FSM/
 ├── State/
 ├── StateMachine/
 ├── IdleState/
@@ -53,18 +80,10 @@ Inspect the script if your compiler or build environment differs from the origin
 └── README.md
 ```
 
-## Design intent
+## Design notes
 
-The library is deliberately small and intended as a learning/reference implementation. It provides a starting point for separating state-specific behavior from the object that owns the state machine.
-
-## Project status
-
-Educational C++ library. API stability, unit-test coverage, and production readiness have not been established.
-
-## Contributing
-
-Issues and pull requests describing focused improvements are welcome.
+This is a learning implementation, not a versioned general-purpose FSM package. Before using it in a larger application, define ownership and lifetime rules for state objects, transition conditions, and error handling.
 
 ## License
 
-No license file was identified in the repository at the time of writing. Contact the author before redistributing or reusing the project.
+No `LICENSE` file is currently included. Unless a license is added, reuse and redistribution permissions are not granted by this repository.
